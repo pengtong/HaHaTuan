@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "HTHomeViewController.h"
+#import "SDWebImageManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    UIWindow *window = [[UIWindow alloc] init];
+    window.frame = [UIScreen mainScreen].bounds;
+    self.window = window;
+    window.rootViewController = [[HTNavigationViewController alloc] initWithRootViewController:[[HTHomeViewController alloc] init]];
+    [window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -40,6 +49,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+    [mgr cancelAll];
+    [mgr.imageCache clearMemory];
 }
 
 @end

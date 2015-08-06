@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HTHomeTopItem">
+            <rect key="frame" x="0.0" y="0.0" width="160" height="35"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uXa-dE-1Ds" userLabel="分割线">
+                    <rect key="frame" x="5" y="5" width="1" height="25"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="NIB-hZ-ePy"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cog-Pz-mFn" userLabel="标题">
+                    <rect key="frame" x="40" y="0.0" width="115" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="sBU-Ea-RR2"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="子标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zdz-8P-qBq" userLabel="子标题">
+                    <rect key="frame" x="40" y="15" width="115" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="otv-br-DYE"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBe-yT-fbI">
+                    <rect key="frame" x="0.0" y="3" width="160" height="32"/>
+                    <inset key="imageEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="icon_district">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="uBe-yT-fbI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3Ec-0s-IwU"/>
+                <constraint firstAttribute="bottom" secondItem="uBe-yT-fbI" secondAttribute="bottom" id="6PZ-Gz-AUI"/>
+                <constraint firstAttribute="trailing" secondItem="Zdz-8P-qBq" secondAttribute="trailing" constant="5" id="DC3-GW-1SO"/>
+                <constraint firstItem="Zdz-8P-qBq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="DJ1-CP-6QF"/>
+                <constraint firstItem="uBe-yT-fbI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="ESZ-eJ-CTh"/>
+                <constraint firstAttribute="trailing" secondItem="Cog-Pz-mFn" secondAttribute="trailing" constant="5" id="Tek-cf-QG6"/>
+                <constraint firstItem="Cog-Pz-mFn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="TxV-fl-IiR"/>
+                <constraint firstAttribute="bottom" secondItem="uXa-dE-1Ds" secondAttribute="bottom" constant="5" id="Z2z-0V-Dod"/>
+                <constraint firstItem="uXa-dE-1Ds" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="aM9-uK-Q8L"/>
+                <constraint firstAttribute="trailing" secondItem="uBe-yT-fbI" secondAttribute="trailing" id="gr5-UO-4z4"/>
+                <constraint firstAttribute="bottom" secondItem="Zdz-8P-qBq" secondAttribute="bottom" id="mbQ-Tb-qkG"/>
+                <constraint firstItem="uXa-dE-1Ds" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="olM-VA-beD"/>
+                <constraint firstItem="Cog-Pz-mFn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="psX-CG-COF"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="itemButton" destination="uBe-yT-fbI" id="6HA-mm-SqC"/>
+                <outlet property="subTitleLabel" destination="Zdz-8P-qBq" id="lJb-fF-1BI"/>
+                <outlet property="titleLabel" destination="Cog-Pz-mFn" id="eHP-9b-K4e"/>
+            </connections>
+            <point key="canvasLocation" x="349" y="314.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_district" width="30" height="30"/>
+    </resources>
+</document>

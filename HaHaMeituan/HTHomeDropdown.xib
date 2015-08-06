@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HTHomeDropdown">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DQD-RH-yQC">
+                    <rect key="frame" x="0.0" y="0.0" width="200" height="400"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="Qv2-RJ-24h"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="yfw-Ew-MeA"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="GFk-5O-ehN"/>
+                    </connections>
+                </tableView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="72m-Gn-Rgp">
+                    <rect key="frame" x="200" y="0.0" width="200" height="400"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="1vY-aK-lWn"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="bm9-ea-CjD"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="Wfw-ew-yOa"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DQD-RH-yQC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1n3-nH-kuV"/>
+                <constraint firstAttribute="bottom" secondItem="DQD-RH-yQC" secondAttribute="bottom" id="G0b-wO-ONO"/>
+                <constraint firstAttribute="bottom" secondItem="72m-Gn-Rgp" secondAttribute="bottom" id="KYk-8F-qpm"/>
+                <constraint firstAttribute="trailing" secondItem="72m-Gn-Rgp" secondAttribute="trailing" id="TjU-Tg-ZhC"/>
+                <constraint firstItem="DQD-RH-yQC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="WwO-AM-xyI"/>
+                <constraint firstItem="72m-Gn-Rgp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ozT-al-One"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="mainTableView" destination="DQD-RH-yQC" id="REE-20-Eph"/>
+                <outlet property="subTableView" destination="72m-Gn-Rgp" id="ktY-tP-bub"/>
+            </connections>
+            <point key="canvasLocation" x="239" y="276"/>
+        </view>
+    </objects>
+</document>

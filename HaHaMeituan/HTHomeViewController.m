@@ -20,8 +20,20 @@
 #import "MBProgressHUD+MJ.h"
 #import "UIView+AutoLayout.h"
 #import "HTSearchViewController.h"
+#import "AwesomeMenu.h"
+#import "HTCollectViewController.h"
+#import "HTScantionViewController.h"
+#import "HTMapDealViewController.h"
 
-@interface HTHomeViewController ()
+typedef NS_ENUM(NSInteger, AwesomeCategory)
+{
+    AwesomeMenuMine = 0,
+    AwesomeMenuCollect,
+    AwesomeMenuScan,
+    AwesomeMenuMore
+};
+
+@interface HTHomeViewController () <AwesomeMenuDelegate>
 
 @property (nonatomic, weak) UIBarButtonItem *categoryItem;
 
@@ -46,16 +58,10 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCategory:) name:HTCategoryDidChangeNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:HTCityDidChangeNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRegion:) name:HTRegionDidChangeNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSort:) name:HTSortDidChangeNotification object:nil];
-    
+    [self setupNotification];
     [self setupLeftNav];
     [self setupRightNav];
+    [self setupAwesomeMenu];
     
     [self.collectionView.header beginRefreshing];
 }
@@ -63,6 +69,17 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setupNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCategory:) name:HTCategoryDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:HTCityDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeRegion:) name:HTRegionDidChangeNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSort:) name:HTSortDidChangeNotification object:nil];
 }
 
 - (void)setupLeftNav
@@ -99,12 +116,44 @@
 
 - (void)setupRightNav
 {
-    UIBarButtonItem *mapItem = [UIBarButtonItem itemWithIcon:@"icon_map" highIcon:@"icon_map_highlighted" target:nil action:nil];
+    UIBarButtonItem *mapItem = [UIBarButtonItem itemWithIcon:@"icon_map" highIcon:@"icon_map_highlighted" target:self action:@selector(mapDeal)];
     mapItem.customView.width = 60;
     
     UIBarButtonItem *searchItem = [UIBarButtonItem itemWithIcon:@"icon_search" highIcon:@"icon_search_highlighted" target:self action:@selector(search)];
     searchItem.customView.width = 60;
     self.navigationItem.rightBarButtonItems = @[mapItem, searchItem];
+}
+
+- (void)setupAwesomeMenu
+{
+    AwesomeMenuItem *startItem = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageWithName:@"icon_pathMenu_background_normal"] highlightedImage:nil ContentImage:[UIImage imageWithName:@"icon_pathMenu_mainMine_normal"] highlightedContentImage:nil];
+   
+    AwesomeMenuItem *item1 = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageWithName:@"bg_pathMenu_black_normal"] highlightedImage:nil ContentImage:[UIImage imageWithName:@"icon_pathMenu_mine_normal"] highlightedContentImage:[UIImage imageWithName:@"icon_pathMenu_mine_highlighted"]];
+
+    AwesomeMenuItem *item2 = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageWithName:@"bg_pathMenu_black_normal"] highlightedImage:nil ContentImage:[UIImage imageWithName:@"icon_pathMenu_collect_normal"] highlightedContentImage:[UIImage imageWithName:@"icon_pathMenu_collect_highlighted"]];
+
+    AwesomeMenuItem *item3 = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageWithName:@"bg_pathMenu_black_normal"] highlightedImage:nil ContentImage:[UIImage imageWithName:@"icon_pathMenu_scan_normal"] highlightedContentImage:[UIImage imageWithName:@"icon_pathMenu_scan_highlighted"]];
+    
+    AwesomeMenuItem *item4 = [[AwesomeMenuItem alloc] initWithImage:[UIImage imageWithName:@"bg_pathMenu_black_normal"] highlightedImage:nil ContentImage:[UIImage imageWithName:@"icon_pathMenu_more_normal"] highlightedContentImage:[UIImage imageWithName:@"icon_pathMenu_more_highlighted"]];
+    
+    NSArray *menuItems = @[item1, item2, item3, item4];
+    AwesomeMenu *menu = [[AwesomeMenu alloc] initWithFrame:CGRectZero startItem:startItem menuItems:menuItems];
+    [self.view addSubview:menu];
+    menu.startPoint = CGPointMake(50, 150);
+    menu.rotateAddButton = NO;
+    menu.menuWholeAngle = M_PI_2;
+    menu.delegate = self;
+    menu.alpha = 0.5;
+    [menu autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [menu autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+    [menu autoSetDimensionsToSize:CGSizeMake(200, 200)];
+}
+
+- (void)mapDeal
+{
+    HTMapDealViewController *mapDealVC = [[HTMapDealViewController alloc] init];
+    HTNavigationViewController *nav = [[HTNavigationViewController alloc] initWithRootViewController:mapDealVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)search
@@ -237,6 +286,58 @@
     if (self.sort)
     {
         params[@"sort"] = @(self.sort.value);
+    }
+}
+
+#pragma mark --AwesomeMenuDelegate
+
+- (void)awesomeMenuWillAnimateOpen:(AwesomeMenu *)menu
+{
+    menu.contentImage = [UIImage imageWithName:@"icon_pathMenu_cross_normal"];
+    [UIView animateWithDuration:0.2f animations:^{
+        menu.alpha = 1.0;
+    }];
+    
+}
+
+- (void)awesomeMenuWillAnimateClose:(AwesomeMenu *)menu
+{
+    menu.contentImage = [UIImage imageWithName:@"icon_pathMenu_mainMine_normal"];
+    [UIView animateWithDuration:0.2f animations:^{
+        menu.alpha = 0.5;
+    }];
+}
+
+- (void)awesomeMenu:(AwesomeMenu *)menu didSelectIndex:(NSInteger)idx
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        menu.alpha = 0.5;
+        menu.contentImage = [UIImage imageWithName:@"icon_pathMenu_mainMine_normal"];
+    }];
+    
+    switch (idx)
+    {
+        case AwesomeMenuMine:
+            break;
+        case AwesomeMenuCollect:
+            {
+                HTCollectViewController *collect = [[HTCollectViewController alloc] init];
+                HTNavigationViewController *nav = [[HTNavigationViewController alloc] initWithRootViewController:collect];
+                [self presentViewController:nav animated:YES completion:nil];
+            }
+            break;
+        case AwesomeMenuScan:
+            {
+                HTScantionViewController *scan = [[HTScantionViewController alloc] init];
+                HTNavigationViewController *nav = [[HTNavigationViewController alloc] initWithRootViewController:scan];
+                [self presentViewController:nav animated:YES completion:nil];
+            }
+            break;
+        case AwesomeMenuMore:
+            
+            break;
+        default:
+            break;
     }
 }
 @end

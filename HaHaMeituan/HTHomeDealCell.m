@@ -21,6 +21,10 @@ static CGFloat CellWH = 305;
 @property (weak, nonatomic) IBOutlet UILabel *listPriceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *purchaseCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *dealNewImage;
+
+@property (weak, nonatomic) IBOutlet UIButton *cover;
+- (IBAction)coverClick:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIImageView *checkView;
 @end
 
 @implementation HTHomeDealCell
@@ -56,6 +60,9 @@ static CGFloat CellWH = 305;
     NSString *nowStr = [fmt stringFromDate:[NSDate date]];
     self.dealNewImage.hidden = ([deal.publish_date compare:nowStr] == NSOrderedAscending);
     
+    self.cover.hidden = !self.deal.editing;
+    self.checkView.hidden = !self.deal.checking;
+    
 }
 
 - (void)drawRect:(CGRect)rect
@@ -63,4 +70,14 @@ static CGFloat CellWH = 305;
     [[UIImage imageWithName:@"bg_dealcell"] drawInRect:rect];
 }
 
+- (IBAction)coverClick:(UIButton *)sender
+{
+    self.deal.checking = !self.deal.isChecking;
+    self.checkView.hidden = !self.checkView.isHidden;
+    
+    if ([self.delegate respondsToSelector:@selector(dealCellCheckingStateDidChange:)])
+    {
+        [self.delegate dealCellCheckingStateDidChange:self];
+    }
+}
 @end

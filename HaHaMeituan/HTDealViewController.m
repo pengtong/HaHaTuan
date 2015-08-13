@@ -14,6 +14,7 @@
 #import "MJRefresh.h"
 #import "MBProgressHUD+MJ.h"
 #import "UIView+AutoLayout.h"
+#import "HTDetailController.h"
 
 @interface HTDealViewController () <DPRequestDelegate>
 @property (nonatomic, strong) NSMutableArray *dealDataArray;
@@ -116,7 +117,7 @@ static NSString * const reuseIdentifier = @"dealcell";
 {
     if (self.lastRequest != request) return;
     
-    HTLog(@"%@", result);
+//    HTLog(@"%@", result);
     NSArray *dealArray = [HTDeal objectArrayWithKeyValuesArray:result[@"deals"]];
     if (self.currentPage == 1)
     {
@@ -133,7 +134,7 @@ static NSString * const reuseIdentifier = @"dealcell";
 
 - (void)request:(DPRequest *)request didFailWithError:(NSError *)error
 {
-    HTLog(@"%@", error);
+//    HTLog(@"%@", error);
     [MBProgressHUD showError:@"网络繁忙，请稍后再试!" toView:self.view];
     
     if (self.currentPage > 1)
@@ -167,5 +168,11 @@ static NSString * const reuseIdentifier = @"dealcell";
 }
 
 #pragma mark <UICollectionViewDelegate>
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    HTDetailController *detailVC = [[HTDetailController alloc] init];
+    detailVC.deal = self.dealDataArray[indexPath.row];
+    [self presentViewController:detailVC animated:YES completion:nil];
+}
 
 @end

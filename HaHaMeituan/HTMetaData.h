@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HTCategory.h"
+#import "HTDeal.h"
 
 @interface HTMetaData : NSObject
 
@@ -16,4 +18,6 @@
 
 + (NSArray *)sorts;
 
+
++ (HTCategory *)categoryWithDeal:(HTDeal *)deal;
 @end

@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class HTRestrictions;
 
 @interface HTDeal : NSObject
+
 
 @property (nonatomic, copy) NSString *deal_id;
 
@@ -28,4 +30,18 @@
 @property (nonatomic, copy) NSString *s_image_url;
 
 @property (nonatomic, copy) NSString *publish_date;
+
+@property (nonatomic, copy) NSString *deal_h5_url;
+
+@property (nonatomic, copy) NSString *purchase_deadline;
+
+@property (nonatomic, strong) HTRestrictions *restrictions;
+
+@property (nonatomic, assign, getter=isEditting) BOOL editing;
+
+@property (nonatomic, assign, getter=isChecking) BOOL checking;
+
+@property (nonatomic, strong) NSArray *businesses;
+
+@property (nonatomic, strong) NSArray *categories;
 @end

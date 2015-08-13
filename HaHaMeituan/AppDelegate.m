@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "HTHomeViewController.h"
 #import "SDWebImageManager.h"
+#import <AlipaySDK/AlipaySDK.h>
+#import "UMSocial.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +21,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [UMSocialData setAppKey:UmengAppkey];
     
     UIWindow *window = [[UIWindow alloc] init];
     window.frame = [UIScreen mainScreen].bounds;
@@ -49,6 +53,29 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+//    [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+    
+    //如果极简开发包不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给开 发包
+    if ([url.host isEqualToString:@"safepay"])
+    {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic)
+        {
+            NSLog(@"result = %@",resultDic);
+        }];
+    }
+    
+    if ([url.host isEqualToString:@"platformapi"])
+    {//支付宝钱包快登授权返回 authCode
+        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic)
+        {
+            NSLog(@"result = %@",resultDic);
+        }];
+    }
+    return YES;
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application

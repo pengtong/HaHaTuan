@@ -19,6 +19,9 @@
 
 #define HTColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0  blue:(b)/255.0  alpha:1]
 
+#define UmengAppkey @"55c9b4dd67e58ef82e003267"
+
+
 #ifdef DEBUG
 #define HTLog(...) NSLog(__VA_ARGS__)
 #else
@@ -38,5 +41,12 @@ extern NSString *const HTSelectSubCategories;
 extern NSString *const HTRegionDidChangeNotification;
 extern NSString *const HTSelectRegion;
 extern NSString *const HTSelectSubRegions;
+
+extern NSString *const HTCollectStateDidChangeNotification;
+extern NSString *const HTCollectDealKey;
+extern NSString *const HTIsCollectKey;
+
+extern NSString *const HTCollect;
+extern NSString *const HTScan;
 
 #endif

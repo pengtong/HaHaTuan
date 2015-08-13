@@ -21,3 +21,10 @@ NSString *const HTSelectSubCategories = @"HTSelectSubCategories";
 NSString *const HTRegionDidChangeNotification = @"HTRegionDidChangeNotification";
 NSString *const HTSelectRegion = @"HTSelectRegion";
 NSString *const HTSelectSubRegions = @"HTSelectSubRegions";
+
+NSString *const HTCollectStateDidChangeNotification = @"HTCollectStateDidChangeNotification";
+NSString *const HTCollectDealKey = @"HTCollectDealKey";
+NSString *const HTIsCollectKey = @"HTIsCollectKey";
+
+NSString *const HTCollect = @"collect";
+NSString *const HTScan = @"scan";

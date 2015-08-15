@@ -18,6 +18,6 @@
 /** 图片名 */
 @property (nonatomic, copy) NSString *icon;
 
-@property (nonatomic, strong) HTDeal *deal;;
+@property (nonatomic, strong) HTDeal *deal;
 
 @end

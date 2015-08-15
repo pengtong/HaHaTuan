@@ -180,11 +180,11 @@
         if (error) return;
         
         CLPlacemark *pm = [placemarks firstObject];
-        HTLog(@"%@, %@",pm.addressDictionary, pm.locality);
-
-        NSString *city = pm.addressDictionary[@"State"];
-        self.city = [city substringToIndex:city.length - 1];
-        
+//        HTLog(@"%@, %@",pm.addressDictionary, pm.locality);
+        NSString *city = pm.locality;
+        NSRange cityRang = [city rangeOfString:@"市"];
+        self.city = [city substringToIndex:cityRang.location];
+        HTLog(@"%@", self.city);
         [self mapView:self.mapView regionDidChangeAnimated:YES];
     }];
 }
@@ -203,7 +203,7 @@
 
     params[@"latitude"] = @(mapView.region.center.latitude);
     params[@"longitude"] = @(mapView.region.center.longitude);
-    params[@"radius"] = @(5000);
+//    params[@"radius"] = @(5000);
     self.lastRequest = [api requestWithURL:@"v1/deal/find_deals" params:params delegate:self];
 }
 

@@ -19,7 +19,7 @@
 #import "HTMetaData.h"
 #import "HTDetailController.h"
 
-@interface HTMapDealViewController ()<MKMapViewDelegate, DPRequestDelegate>
+@interface HTMapDealViewController ()<MKMapViewDelegate, DPRequestDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLGeocoder *geocoder;
@@ -27,6 +27,7 @@
 @property (nonatomic, strong) DPRequest *lastRequest;
 @property (nonatomic, weak) UIBarButtonItem *categoryItem;
 @property (nonatomic, copy) NSString *selectCategoryName;
+@property (strong, nonatomic) CLLocationManager *lmgr;
 @end
 
 @implementation HTMapDealViewController
@@ -50,6 +51,8 @@
     self.mapView.showsUserLocation = YES;
     self.mapView.mapType = MKMapTypeStandard;
     
+    [self.lmgr startUpdatingLocation];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCategory:) name:HTCategoryDidChangeNotification object:nil];
 }
 
@@ -60,6 +63,21 @@
         _geocoder = [[CLGeocoder alloc] init];
     }
     return _geocoder;
+}
+
+- (CLLocationManager *)lmgr
+{
+    if (![CLLocationManager locationServicesEnabled]) return nil;
+    
+    if (!_lmgr)
+    {
+        _lmgr = [[CLLocationManager alloc] init];
+        _lmgr.desiredAccuracy = kCLLocationAccuracyBest;
+        [_lmgr requestAlwaysAuthorization];
+        [_lmgr requestWhenInUseAuthorization];
+        _lmgr.delegate = self;
+    }
+    return _lmgr;
 }
 
 - (void)changeCategory:(NSNotification *)nofit
@@ -106,6 +124,16 @@
 {
     [self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
 }
+#pragma mark --CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    [self.lmgr stopUpdatingLocation];
+    CLLocation *location = [locations firstObject];
+    
+    [self.mapView setCenterCoordinate:location.coordinate animated:YES];
+}
+
 #pragma mark--MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
@@ -143,10 +171,10 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.1, 0.1);;
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.2, 0.2);;
     MKCoordinateRegion reg = MKCoordinateRegionMake(userLocation.location.coordinate, span);
-    [mapView setRegion:reg];
-
+    [self.mapView setRegion:reg];
+    
     [self.geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray *placemarks, NSError *error)
     {
         if (error) return;

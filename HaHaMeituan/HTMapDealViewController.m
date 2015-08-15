@@ -109,11 +109,11 @@
 #pragma mark--MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    HTDealAnnotation *annotation = (HTDealAnnotation *)view.annotation;
-    HTDetailController *detailVC = [[HTDetailController alloc] init];
-    detailVC.deal = annotation.deal;
-
-    [self presentViewController:detailVC animated:YES completion:nil];
+//    HTDealAnnotation *annotation = (HTDealAnnotation *)view.annotation;
+//    HTDetailController *detailVC = [[HTDetailController alloc] init];
+//    detailVC.deal = annotation.deal;
+//
+//    [self presentViewController:detailVC animated:YES completion:nil];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(HTDealAnnotation *)annotation

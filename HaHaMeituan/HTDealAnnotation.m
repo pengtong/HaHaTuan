@@ -12,7 +12,6 @@
 
 - (BOOL)isEqual:(HTDealAnnotation *)other
 {
-    
     return [self.title isEqual:other.title];
 }
 

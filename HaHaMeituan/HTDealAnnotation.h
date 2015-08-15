@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+@class HTDeal;
 
 @interface HTDealAnnotation : NSObject<MKAnnotation>
 
@@ -16,5 +17,7 @@
 @property (nonatomic, copy) NSString *subtitle;
 /** 图片名 */
 @property (nonatomic, copy) NSString *icon;
+
+@property (nonatomic, strong) HTDeal *deal;;
 
 @end

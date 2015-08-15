@@ -17,6 +17,7 @@
 #import "HTDealAnnotation.h"
 #import "HTBusinesses.h"
 #import "HTMetaData.h"
+#import "HTDetailController.h"
 
 @interface HTMapDealViewController ()<MKMapViewDelegate, DPRequestDelegate>
 
@@ -106,7 +107,14 @@
     [self.mapView setCenterCoordinate:self.mapView.userLocation.location.coordinate animated:YES];
 }
 #pragma mark--MKMapViewDelegate
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    HTDealAnnotation *annotation = (HTDealAnnotation *)view.annotation;
+    HTDetailController *detailVC = [[HTDetailController alloc] init];
+    detailVC.deal = annotation.deal;
 
+    [self presentViewController:detailVC animated:YES completion:nil];
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(HTDealAnnotation *)annotation
 {
@@ -135,10 +143,10 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.2, 0.2);;
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.1, 0.1);;
     MKCoordinateRegion reg = MKCoordinateRegionMake(userLocation.location.coordinate, span);
     [mapView setRegion:reg];
-    
+
     [self.geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray *placemarks, NSError *error)
     {
         if (error) return;
@@ -201,6 +209,7 @@
             anno.title = business.name;
             anno.subtitle = deal.title;
             anno.icon = category.map_icon;
+            anno.deal = deal;
         
             if ([self.mapView.annotations containsObject:anno]) break;
             
